@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_orders
+
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+
+      - name: financial_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['paid', 'refunded', 'voided', 'partially_refunded', 'pending', null]
+              config:
+                severity: warn
+
+      - name: currency
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['USD', 'AUD', 'GBP']
+              config:
+                severity: warn
+
+      - name: quantity
+        tests:
+          - not_null
